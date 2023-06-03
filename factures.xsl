@@ -9,7 +9,7 @@
     <xsl:template match="celler">
         <html>
             <head>
-                <title>Ca'n Franco</title>
+                <title>EspeWine</title>
                 <link rel="stylesheet" href="estil.css"/>
             </head>
             <body>
@@ -23,60 +23,75 @@
                     day = date.getDate();
                     var elements = document.getElementsByClassName("data");
                     for (var i = 0; i &lt; elements.length; i++) {
-                    elements[i].innerHTML = month + "/" + day + "/" + year;
+                        elements[i].innerHTML = month + "/" + day + "/" + year;
                     }
+                    
                     var tiposPago = document.getElementsByClassName("tipoPago");
+                    var metodos = ["Visa", "Cheque", "Efectiu", "Prestamo"];
                     for (var i = 0; i &lt; tiposPago.length; i++) {
-                    if(i % 4 == 0) { tiposPago[i].innerHTML = "Visa";}
-                    else if(i % 2 == 0) { tiposPago[i].innerHTML = "Cheque";}
-                    else{ tiposPago[i].innerHTML = "Efectiu";}
+                        let rand = Math.random() * metodos.length;
+                        tiposPago[i].innerHTML = metodos[Math.floor(rand)];
                     }
-                    var orientacions = document.getElementsByClassName("orientacio");
-                    for (var i = 0; i &lt; orientacions.length; i++) {
-
-
-
-
                 </script>
             </body>
         </html>
     </xsl:template>
 
     <xsl:template match="factura">
-
         <div class="pagina">
-            <div class="top1">
-                <div class="logo"><img src="logo.svg" alt="logo"/></div>
-                <div class="titol">Ca'n Franco</div>
+            <div class="encabezado">
+                <img src="logo.svg" alt="logo"/>
+                <div class="titulo">EspeWine</div>
+                <img src="logo.svg" alt="logo"/>
             </div>
-            <div class="dades">
-            <div class="dades_empresa">
-                <div class="c2"><div class="camps c1">Codi factura: </div><div><xsl:value-of select="@numero"/></div></div>
-                <div class="c2"><div class="camps c1"> Data: </div><div class="data"> </div></div>
-                <div class="c2"><div class="camps c1">Nom empresa: </div><div>Ca'n Franco SA</div></div>
-                <div class="c2"><div class="camps c1">NIF empresa: </div><div>D54877669</div></div>
-            </div>
-            <div class="dadesClient">
-                <xsl:variable name="codi_client" select="comprador/@codi"/>
-                <xsl:variable name="client" select="//client[@codi=$codi_client]"/>
-        <div class="c2"><div class="camps c1">Codi client: </div><div><xsl:value-of select="$client/@codi"/></div></div>
-                <div class="c2"><div class="camps c1" >Nom client: </div><div><xsl:value-of select="$client/nom"/></div></div>
-                <div class="c2"><div class="camps c1">Telefon contacte 1: </div><div><xsl:value-of select="$client/telefon[1]"/></div></div>
-                <div class="c2"><div class="camps c1">Telefon contacte 2: </div><div><xsl:value-of select="$client/telefon[2]"/></div></div>
-            </div>
-</div>
-            <div class="compra">
-                <div class="fila camps">
-                    <div class="codi">Codi</div>
-                    <div class="unitats">Unitats</div>
-                    <div class="producte">Producte</div>
-                    <div class="preu">Preu</div>
-                    <div class="import">Import</div>
+            
+            <div class="datos">
+                <div class="datos_empresa">
+                    <div >CÓD. FACTURA:</div>
+                    <div>
+                        <xsl:value-of select="@numero"/>
+                    </div>
+                    <div>Empresa:</div>
+                    <div>ESPEWINE, S.L.U.</div>
+                    <div>NIF empresa:</div>
+                    <div>43183447G</div>
                 </div>
+                
+                <div class="datos_cliente">
+                    <xsl:variable name="codi_client" select="comprador/@codi"/>
+                    <xsl:variable name="client" select="//client[@codi=$codi_client]"/>
+                    <div>CÓD. CLIENTE:</div>
+                    <div>
+                        <xsl:value-of select="$client/@codi"/>
+                    </div>
+                    <div>CLIENTE:</div>
+                    <div>
+                        <xsl:value-of select="$client/nom"/>
+                    </div>
+                    <div>TELÉFONO DE CONTACTO 1:</div>
+                    <div>
+                        <xsl:value-of select="$client/telefon[1]"/>
+                    </div>
+                    <div>TELÉFONO DE CONTACTO 2:</div>
+                    <div>
+                        <xsl:value-of select="$client/telefon[2]"/>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="compra">
+                <div class="titulo_compra">CÓDIGO</div>
+                <div class="titulo_compra">UDS.</div>
+                <div class="titulo_compra">PRODUCTO</div>
+                <div class="titulo_compra">PRECIO</div>
+                <div class="titulo_compra">IVA</div>
+                <div class="titulo_compra">IMPORTE</div>
+
                 <xsl:call-template name="compra">
                     <xsl:with-param name="contador" select="1"/>
                 </xsl:call-template>
             </div>
+
             <xsl:variable name="total">
                 <xsl:for-each select="unitats">
 
@@ -88,46 +103,54 @@
                     </xsl:element>
                 </xsl:for-each>
             </xsl:variable>
-            <div class="fila total">
-            <div class="camps">Total</div>
-                <div><xsl:value-of select="format-number(sum($total/parcial), '#.00€')"/> </div>
+            <div class="total">
+                <div>Total</div>
+                <div class="calculo">
+                    <xsl:value-of select="format-number(sum($total/parcial), '#.00€')"/>
+                </div>
             </div>
 
             <xsl:variable name="codi_client" select="comprador/@codi"/>
             <xsl:variable name="client" select="//client[@codi=$codi_client]"/>
-            <div class="bot">
-                <div class="firma"><p>Firma del client</p><p class="orientacio"><xsl:value-of select="substring(substring-after($client/nom, ','), 2, 1), '.', substring-before($client/nom, ' ')"/></p> </div>
-<div class="pago"><p>Mètode de pagament</p><p class="tipoPago"> </p> </div>
+            <div class="footer">
+                <div>
+                    <p>FIRMA</p>
+                        <p class="firma">
+                        <xsl:value-of
+                                select="substring(substring-after($client/nom, ','), 2, 1), '.', substring-before($client/nom, ' ')"/>
+                    </p>
+                </div>
+                <div class="pago">
+                    <p>MÉTODOS DE PAGO</p>
+                    <p class="tipoPago">pago</p>
+                </div>
             </div>
         </div>
     </xsl:template>
 
     <xsl:template name="compra">
         <xsl:param name="contador"/>
-
         <xsl:choose>
             <xsl:when test="unitats[$contador]">
                 <xsl:variable name="codi_producte" select="unitats[$contador]/@codi"/>
                 <xsl:variable name="producte" select="key('producte', $codi_producte)"/>
                 <xsl:variable name="preu" select="$producte/@preu"/>
 
-                <div class="fila">
-                    <div><xsl:value-of select="$codi_producte"/></div>
-                    <div><xsl:value-of select="unitats[$contador]"/></div>
-                    <div><xsl:value-of select="$producte"/></div>
-                    <div><xsl:value-of select="format-number($preu, '#.00€')"/></div>
-                    <div><xsl:value-of select="format-number($preu * unitats[$contador], '#.00€')"/></div>
-                </div>
+                <div><xsl:value-of select="$codi_producte"/></div>
+                <div><xsl:value-of select="unitats[$contador]"/></div>
+                <div><xsl:value-of select="$producte"/></div>
+                <div><xsl:value-of select="format-number($preu, '#.00€')"/></div>
+                <div>iva</div>
+                <div><xsl:value-of select="format-number($preu * unitats[$contador], '#.00€')"/></div>
 
             </xsl:when>
             <xsl:otherwise>
-                <div class="fila">
-                    <div> </div>
-                    <div> </div>
-                    <div> </div>
-                    <div> </div>
-                    <div> </div>
-                </div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
             </xsl:otherwise>
         </xsl:choose>
 

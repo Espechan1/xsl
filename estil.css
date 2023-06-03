@@ -1,191 +1,82 @@
-@font-face {
-    font-family: dancing;
-    src: url(font/DancingScript-VariableFont_wght.ttf);
-}
-@font-face {
-    font-family: greatVibes;
-    src: url(font/GreatVibes-Regular.ttf);
-}
-/* superior */
-body{
-    background: white;
-    align-content: center;
-    border: 0;
-    margin: auto;
+.pagina {
+    display: grid;
+    height: 297mm;
     width: 210mm;
-}
-.pagina{
-    background: white;
-    max-height: 297mm;
-    max-width: 210mm;
     page-break-after: always;
-    align-items: center;
-    horiz-align: center;
+    background-color: white;
+    grid-template-rows: 1fr 1fr 4fr 1fr 2fr;
+    grid-row-gap: 3mm;
 }
-.top1{
-    border-radius: 10px;
-    border: 2px solid cadetblue;
-    margin: 15mm auto 0mm auto;
-    height: 37mm;
-    width: 180mm;
+.pagina > div {
+    width: 95%;
+    margin: 0 auto;
+}
+
+.encabezado {
     display: flex;
-    align-items: center;
-    align-content: center;
-    font-size: 22pt;
+    justify-content: center;
+}
+.encabezado .titulo {
+    text-align: center;
+    font-size: 4em; /*16px = 1 em*/
+}
+.encabezado img {
+    width: 20%;
+}
+/* imagen invertida horizontal, toma flip. */
+.encabezado img:last-child{
+    transform: scaleX(-1);
+}
+
+.datos {
+    display: flex;
+    justify-content: space-between;
+    padding: 15px 40px;
+}
+.datos_empresa, .datos_cliente {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    width: 45%;
+}
+.datos_empresa div:nth-child(odd), .datos_cliente div:nth-child(odd) {
     font-weight: bold;
 }
-.logo img {
-    margin-left: 10mm;
-    height: 40mm;
-    margin-right: 18mm;
+.datos_empresa div:nth-child(even), .datos_cliente div:nth-child(even) {
+    font-family: sans-serif;
 }
 
-
-/* Dades contacte */
-.dades{
-    margin-top: 15mm;
-    margin-bottom: 10mm;
-    display: flex;
+.compra {
+    display: grid;
+    grid-template-columns: 1fr 1fr 5fr 1fr 1fr 1fr;
+    background: url(logo_opacidad.svg);
 }
-.dades_empresa{
-    font-family: dancing, serif;
-    color: dodgerblue;
-    border-radius: 10px;
-    border: 2px solid cadetblue;
-    margin-left: 15mm;
-    width: 85mm;
-    height: 25mm;
+.compra .titulo_compra {
+    font-weight: bold;
 }
-.dadesClient{
-    font-family: dancing, serif;
-    color: dodgerblue;
-    margin-left: auto;
-    margin-right: 15mm;
-    border-radius: 10px;
-    border: 2px solid cadetblue;
-    width: 85mm;
-    height: 25mm;
+.compra div:nth-child(12n+1), .compra div:nth-child(12n+2), .compra div:nth-child(12n+3),
+.compra div:nth-child(12n+4), .compra div:nth-child(12n+5), .compra div:nth-child(12n+6){
+    background-color: rgba(120, 120, 120, 0.2);
 }
-.camp{
-    width: 35mm;
+.compra div {
+    min-height: 4mm;
 }
 
-/* factura */
-.fila{
-    font-family: dancing, serif;
-    color: dodgerblue;
-    width: 180mm;
-    height: 9mm;
+.total {
     display: flex;
-    margin: auto;
-
+    justify-content: flex-end;
 }
-.fila div{
-    margin: 0.5mm;
-    border-radius: 10px;
-    border: 2px solid cadetblue;
-    display: flex;
-    align-items: center;
-    align-content: center;
-    justify-content: center;
-    horiz-align: center;
-}
-.fila div:nth-of-type(1){
-    width: 20mm;
-}
-.fila div:nth-of-type(2){
-    width: 30mm;
-}
-.fila div:nth-of-type(3){
-    width: 100mm;
-}
-.fila div:nth-of-type(4){
-    width: 50mm;
-}
-.fila div:nth-of-type(5){
-    width: 50mm;
-}
-.total div:nth-of-type(1){
-width: 204mm;
-}
-.total div:nth-of-type(2){
-    width: 50mm;
-}
-.dades_empresa > div{
-    display: flex;
-}
-.dadesClient > div{
-    display: flex;
-}
-.camps{
-    font-family: Arial, serif;
-    color: black;
-}
-.c2{
-
-    margin: 1mm 3mm 0.5mm 2mm ;
-}
-.c1{
-margin-right: 2mm;
-}
-.firma{
-    font-family: greatVibes, serif;
-    font-size: 17pt;
-}
-.bot{
-    margin-top: 5mm;
-    width: 210mm;
-    height: 30mm;
-    display: flex;
-    align-items: center;
-    align-content: center;
-}
-.firma{
-    margin-left:15mm;
-    width:70mm;
-    height: 20mm;
-    border: 2px solid cadetblue;
-    border-radius: 10px;
-    display: flex;
-    align-items: center;
-    align-content: center;
-    justify-content: center;
-    horiz-align: center;
-
-}
-.firma p:nth-of-type(1){
-    font-family: Arial, serif;
-    font-size: 11pt;
-    position: absolute;
-    padding-bottom: 14mm;
-}
-.pago p:nth-of-type(1){
-    font-family: Arial, serif;
-    font-size: 11pt;
-    position: absolute;
-    padding-bottom: 14mm;
+.total .calculo {
+    width: 15%;
+    text-align: end;
+    font-size: 1.5em;
 }
 
-.pago p:nth-of-type(2){
-    font-family: dancing, serif;
-    font-size: 20pt;
-    position: absolute;
-    padding-top: 5mm;
-}
-.orientacio{
-    position: absolute;
-    padding-top: 5mm;
-}
-.pago{
-    margin-left: auto;
-    margin-right: 15mm;
-    width:70mm;
-    border: 2px solid cadetblue;
-    border-radius: 10px;
-    height: 20mm;
+.footer {
     display: flex;
-    align-items: center;
-    align-content: center;
-    justify-content: center;
-    horiz-align: center;
+    justify-content: space-around;
+}
+.footer .firma {
+    font-family: cursive;
+    font-size: 2em;
+    transform: rotate3d(1, 1, 1, -10deg);
 }
